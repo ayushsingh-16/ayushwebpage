@@ -1,2 +1,0 @@
-npx create-react-app zetheta-trading-shell --template typescript
-npm install @reduxjs/toolkit react-redux axios lightweight-charts lucide-react
