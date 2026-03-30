@@ -1,0 +1,26 @@
+// src/store/strategySlice.ts
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+interface StrategyState {
+  items: Array<{ id: string; name: string; isActive: boolean; lastPnL: number }>;
+  riskLimits: { maxDrawdown: number; maxPositionSize: number };
+}
+
+const initialState: StrategyState = {
+  items: [],
+  riskLimits: { maxDrawdown: 5, maxPositionSize: 1.0 },
+};
+
+export const strategySlice = createSlice({
+  name: 'strategy',
+  initialState,
+  reducers: {
+    toggleStrategy: (state, action: PayloadAction<string>) => {
+      const strategy = state.items.find(s => s.id === action.payload);
+      if (strategy) strategy.isActive = !strategy.isActive;
+    },
+    updatePnL: (state, action: PayloadAction<{id: string, pnl: number}>) => {
+        // logic to update pnl
+    }
+  },
+});

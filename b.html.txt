@@ -1,0 +1,63 @@
+// src/components/Dashboard.tsx
+import React, { useEffect, useState } from 'react';
+import { TrendingUp, ShieldCheck, Zap, Award } from 'lucide-react';
+import StrategyCard from './StrategyCard';
+import TradingChart from './TradingChart';
+
+const Dashboard: React.FC = () => {
+  const [pnl, setPnl] = useState(2450.75);
+
+  return (
+    <div className="min-h-screen bg-slate-900 text-white p-6">
+      {/* Header with Gamification */}
+      <header className="flex justify-between items-center mb-8 bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <div>
+          <h1 className="text-2xl font-bold text-blue-400">Zetheta Algo-Engine</h1>
+          <p className="text-sm text-slate-400">Status: <span className="text-green-400">Connected to Exchange (Testnet)</span></p>
+        </div>
+        <div className="flex gap-6 items-center">
+          <div className="text-right">
+            <p className="text-xs text-slate-400 uppercase">Daily XP</p>
+            <div className="w-32 h-2 bg-slate-700 rounded-full mt-1">
+              <div className="bg-yellow-500 h-full rounded-full" style={{ width: '65%' }}></div>
+            </div>
+          </div>
+          <div className="bg-slate-700 p-2 rounded-lg flex items-center gap-2">
+            <Award className="text-yellow-500" />
+            <span className="font-bold">Level 12</span>
+          </div>
+        </div>
+      </header>
+
+      <div className="grid grid-cols-12 gap-6">
+        {/* Left: Strategy Control */}
+        <div className="col-span-4 space-y-4">
+          <h2 className="text-xl font-semibold mb-4">Active Strategies</h2>
+          <StrategyCard name="Trend Follower v1" status="Running" type="Trend" profit="+12.5%" color="text-green-400" />
+          <StrategyCard name="Mean Reversion" status="Paused" type="Stat-Arb" profit="-2.1%" color="text-red-400" />
+          <StrategyCard name="VWAP Execution" status="Running" type="Execution" profit="+0.4%" color="text-blue-400" />
+        </div>
+
+        {/* Center: Live Charts & Performance */}
+        <div className="col-span-8 bg-slate-800 rounded-xl p-4 border border-slate-700">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-medium">Market Performance (BTC/USDT)</h3>
+            <div className="flex gap-4">
+              <div className="text-center">
+                <p className="text-xs text-slate-400">Total P&L</p>
+                <p className="text-lg font-bold text-green-400">${pnl}</p>
+              </div>
+              <div className="text-center">
+                <p className="text-xs text-slate-400">Sharpe Ratio</p>
+                <p className="text-lg font-bold">1.82</p>
+              </div>
+            </div>
+          </div>
+          <TradingChart />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;
