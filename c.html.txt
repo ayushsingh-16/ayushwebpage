@@ -1,0 +1,32 @@
+// src/components/TradingChart.tsx
+import React, { useEffect, useRef } from 'react';
+import { createChart, ColorType } from 'lightweight-charts';
+
+const TradingChart: React.FC = () => {
+  const chartContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!chartContainerRef.current) return;
+
+    const chart = createChart(chartContainerRef.current, {
+      layout: { background: { type: ColorType.Solid, color: '#1e293b' }, textColor: '#d1d5db' },
+      grid: { vertLines: { color: '#334155' }, horzLines: { color: '#334155' } },
+      width: chartContainerRef.current.clientWidth,
+      height: 400,
+    });
+
+    const candlestickSeries = chart.addCandlestickSeries();
+    // Mock Data - Real implementation would use WebSocket/API
+    candlestickSeries.setData([
+      { time: '2024-05-01', open: 62000, high: 63500, low: 61800, close: 63000 },
+      { time: '2024-05-02', open: 63000, high: 64000, low: 62500, close: 63800 },
+      // ... aur data yahan aayega
+    ]);
+
+    return () => chart.remove();
+  }, []);
+
+  return <div ref={chartContainerRef} className="w-full" />;
+};
+
+export default TradingChart;
